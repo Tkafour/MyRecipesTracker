@@ -1,8 +1,8 @@
 package com.example.artka.myrecipestrackers.injection.component
 
 import com.example.artka.myrecipestrackers.injection.module.NetworkModule
-import com.example.artka.myrecipestrackers.mainactivity.RecipeListViewModel
-import com.example.artka.myrecipestrackers.mainactivity.RecipeViewModel
+import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListViewModel
+import com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel
 import dagger.Component
 import javax.inject.Singleton
 

@@ -1,8 +1,9 @@
-package com.example.artka.myrecipestrackers.mainactivity
+package com.example.artka.myrecipestrackers.recipelistfragment
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.databinding.ListItemBinding
@@ -21,7 +22,7 @@ class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
         return if (::items.isInitialized) items.size else 0
     }
 
-    override fun onBindViewHolder(holder: RecipeListAdapter.ViewHolder, position: Int) = holder.bind(items[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
 
     fun updateRecipeList(items : List<RecipeModel>){
         this.items = items

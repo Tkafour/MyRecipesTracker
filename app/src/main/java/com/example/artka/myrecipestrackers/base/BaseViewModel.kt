@@ -4,10 +4,11 @@ import android.arch.lifecycle.ViewModel
 import com.example.artka.myrecipestrackers.injection.component.DaggerViewModelInjector
 import com.example.artka.myrecipestrackers.injection.module.NetworkModule
 import com.example.artka.myrecipestrackers.injection.component.ViewModelInjector
-import com.example.artka.myrecipestrackers.mainactivity.RecipeListViewModel
-import com.example.artka.myrecipestrackers.mainactivity.RecipeViewModel
+import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListViewModel
+import com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel
 
 abstract class BaseViewModel: ViewModel(){
+
     private val injector: ViewModelInjector = DaggerViewModelInjector
             .builder()
             .networkModule(NetworkModule)
@@ -17,9 +18,6 @@ abstract class BaseViewModel: ViewModel(){
         inject()
     }
 
-    /**
-     * Injects the required dependencies
-     */
     private fun inject() {
         when (this) {
             is RecipeListViewModel -> injector.inject(this)

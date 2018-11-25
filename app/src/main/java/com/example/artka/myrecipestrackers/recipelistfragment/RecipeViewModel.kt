@@ -1,16 +1,20 @@
-package com.example.artka.myrecipestrackers.mainactivity
+package com.example.artka.myrecipestrackers.recipelistfragment
 
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.BindingAdapter
+import android.widget.ImageView
 import com.example.artka.myrecipestrackers.base.BaseViewModel
 import com.example.artka.myrecipestrackers.room.RecipeModel
+import com.squareup.picasso.Picasso
 
 class RecipeViewModel: BaseViewModel() {
+
     private val publisher = MutableLiveData<String>()
     private val f2fUrl = MutableLiveData<String>()
     private val title = MutableLiveData<String>()
     private val sourceUrl = MutableLiveData<String>()
     private val recipeId = MutableLiveData<String>()
-    private val imageUrl = MutableLiveData<String>()
+    private var imageUrl = String()
     private val socialRank = MutableLiveData<Double>()
     private val publisherUrl = MutableLiveData<String>()
 
@@ -20,7 +24,7 @@ class RecipeViewModel: BaseViewModel() {
         title.value = recipeModel.title
         sourceUrl.value = recipeModel.source_url
         recipeId.value = recipeModel.recipe_id
-        imageUrl.value = recipeModel.image_url
+        imageUrl = recipeModel.image_url
         socialRank.value = recipeModel.social_rank
         publisherUrl.value = recipeModel.publisher_url
     }
@@ -29,7 +33,8 @@ class RecipeViewModel: BaseViewModel() {
         return title
     }
 
-    fun getRecipeIngredients():MutableLiveData<String> {
-        return publisherUrl
+    fun getImageUrl():String {
+        return imageUrl
     }
+
 }
