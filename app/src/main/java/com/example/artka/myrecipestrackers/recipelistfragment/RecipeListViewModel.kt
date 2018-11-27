@@ -10,16 +10,23 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.list_item.view.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class RecipeListViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(), IRecipeListViewModel {
 
+
     @Inject
     lateinit var recipeApi: RecipeApi
-    val recipeListAdapter = RecipeListAdapter()
+    val recipeListAdapter = RecipeListAdapter{itemClicked{recipeModel -> itemClicked(recipeModel as RecipeModel)}}
 
     private lateinit var subscription: Disposable
+    private lateinit var callbacks: Callbacks
+
+    interface Callbacks {
+        fun itemClicked()
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -55,6 +62,11 @@ class RecipeListViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(
 
     private fun onRetrieveRecipesListFailure() {
         Log.e("TAG", "Failed to get recipes")
+    }
+
+    private fun itemClicked(recipeModel: RecipeModel) {
+        Log.e("TAG", "Holder clicked")
+        callbacks.itemClicked()
     }
 
 }

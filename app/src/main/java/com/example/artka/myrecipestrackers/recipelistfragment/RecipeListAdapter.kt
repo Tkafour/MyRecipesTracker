@@ -9,7 +9,7 @@ import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.databinding.ListItemBinding
 import com.example.artka.myrecipestrackers.room.RecipeModel
 
-class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
+class RecipeListAdapter(val clickListener: (RecipeModel) -> Unit): RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     private lateinit var items : List<RecipeModel>
 
@@ -22,7 +22,7 @@ class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
         return if (::items.isInitialized) items.size else 0
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], clickListener)
 
     fun updateRecipeList(items : List<RecipeModel>){
         this.items = items
@@ -33,9 +33,10 @@ class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
         private val viewModel = RecipeViewModel()
 
-        fun bind(recipeModel: RecipeModel) {
+        fun bind(recipeModel: RecipeModel, clickListener: (RecipeModel) -> Unit) {
             viewModel.bind(recipeModel)
             binding.viewModel = viewModel
+            binding.root.setOnClickListener{clickListener(recipeModel)}
         }
     }
 }
