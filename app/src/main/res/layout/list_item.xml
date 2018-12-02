@@ -3,38 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel"/>
+            type="com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel" />
     </data>
 
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:orientation="vertical"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="8dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recipe_name"
-            android:text="@{viewModel.getRecipeTitle()}"
-            android:singleLine="true"
-            android:background="@color/colorAccent"
-            android:textColor="@android:color/white"
-            android:textAlignment="center"
-            android:layout_marginTop="8dp" />
-        <ImageView
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recipe_image"
-            android:layout_marginTop="0dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.imageUrl}"
-            app:layout_constraintTop_toBottomOf="@id/recipe_name"/>
-    </LinearLayout>
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recipe_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:singleLine="true"
+                android:text="@{viewModel.getRecipeTitle()}"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/recipe_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.imageUrl}"
+                app:layout_constraintTop_toBottomOf="@id/recipe_name" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </layout>

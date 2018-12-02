@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import com.example.artka.myrecipestrackers.injection.component.DaggerViewModelInjector
 import com.example.artka.myrecipestrackers.injection.module.NetworkModule
 import com.example.artka.myrecipestrackers.injection.component.ViewModelInjector
-import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListViewModel
+import com.example.artka.myrecipestrackers.mainactivity.SharedViewModel
 import com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel
 
 abstract class BaseViewModel: ViewModel(){
@@ -20,7 +20,7 @@ abstract class BaseViewModel: ViewModel(){
 
     private fun inject() {
         when (this) {
-            is RecipeListViewModel -> injector.inject(this)
+            is SharedViewModel -> injector.inject(this)
             is RecipeViewModel -> injector.inject(this)
         }
     }

@@ -1,44 +1,49 @@
-package com.example.artka.myrecipestrackers.recipelistfragment
+package com.example.artka.myrecipestrackers.mainactivity
 
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.artka.myrecipestrackers.base.BaseViewModel
+import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListAdapter
 import com.example.artka.myrecipestrackers.retrofit.RecipeApi
 import com.example.artka.myrecipestrackers.room.RecipeDataDao
 import com.example.artka.myrecipestrackers.room.RecipeModel
+import com.example.artka.myrecipestrackers.utils.Enums
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.list_item.view.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class RecipeListViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(), IRecipeListViewModel {
-
+class SharedViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(), IRecipeListViewModel {
 
     @Inject
     lateinit var recipeApi: RecipeApi
-    val recipeListAdapter = RecipeListAdapter{itemClicked{recipeModel -> itemClicked(recipeModel as RecipeModel)}}
+    val recipeListAdapter = RecipeListAdapter()
 
-    private lateinit var subscription: Disposable
-    private lateinit var callbacks: Callbacks
+    private lateinit var subscriptionUrl: Disposable
+    private var subscriptionAdapter: Disposable? = null
 
-    interface Callbacks {
-        fun itemClicked()
-    }
+    private var state : MutableLiveData<Enums.state> = MutableLiveData()
+    private var recipe : MutableLiveData<RecipeModel> = MutableLiveData()
+
 
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+        subscriptionUrl.dispose()
+        subscriptionAdapter?.dispose()
     }
 
     init {
+        state.value = Enums.state.MASTER
         loadRecipes()
+        setupItemClick()
     }
 
     override fun loadRecipes() {
-        subscription = Observable.fromCallable { recipeDao.getAll() }
+        subscriptionUrl = Observable.fromCallable { recipeDao.getAll() }
                 .concatMap { dbRecipeList ->
                     if (dbRecipeList.isEmpty())
                         recipeApi.getRecipes().concatMap { apiRecipeList ->
@@ -56,7 +61,7 @@ class RecipeListViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(
                         {onRetrieveRecipesListFailure()})
     }
 
-    private fun onRetrieveRecipesListSuccess(recipesList: List<RecipeModel>) {
+    private fun onRetrieveRecipesListSuccess(recipesList: ArrayList<RecipeModel>) {
         recipeListAdapter.updateRecipeList(recipesList)
     }
 
@@ -64,11 +69,27 @@ class RecipeListViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(
         Log.e("TAG", "Failed to get recipes")
     }
 
-    private fun itemClicked(recipeModel: RecipeModel) {
-        Log.e("TAG", "Holder clicked")
-        callbacks.itemClicked()
+    fun setupItemClick() {
+        subscriptionAdapter = recipeListAdapter.clickEvent
+                .subscribe {changeFragment(it)}
+    }
+
+    fun changeFragment(recipeModel: RecipeModel) {
+
+        recipe.value = recipeModel
+
+        if (recipe.value != null) {
+            state.value = Enums.state.DETAIL
+            getState()
+        }
+    }
+
+    fun getState() : LiveData<Enums.state> {
+        return state
+    }
+
+    fun getRecipe() : LiveData<RecipeModel> {
+        return recipe
     }
 
 }
-
-

@@ -1,7 +1,7 @@
 package com.example.artka.myrecipestrackers.injection.component
 
 import com.example.artka.myrecipestrackers.injection.module.NetworkModule
-import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListViewModel
+import com.example.artka.myrecipestrackers.mainactivity.SharedViewModel
 import com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Component(modules = [(NetworkModule::class)])
 interface ViewModelInjector {
 
-    fun inject(recipeListViewModel: RecipeListViewModel)
+    fun inject(sharedViewModel: SharedViewModel)
 
     fun inject(recipeViewModel: RecipeViewModel)
 

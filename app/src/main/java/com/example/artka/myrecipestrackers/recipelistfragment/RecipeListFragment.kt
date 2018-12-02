@@ -12,14 +12,15 @@ import android.view.ViewGroup
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.databinding.RecipeListFragmentBinding
 import com.example.artka.myrecipestrackers.injection.ViewModelFactory
+import com.example.artka.myrecipestrackers.mainactivity.SharedViewModel
 
 class RecipeListFragment : Fragment() {
 
-    private val recipeViewModel : RecipeListViewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory(activity as AppCompatActivity)).get(RecipeListViewModel::class.java)
+    private val recipeViewModel: SharedViewModel by lazy {
+        ViewModelProviders.of(activity as AppCompatActivity, ViewModelFactory(activity as AppCompatActivity)).get(SharedViewModel::class.java)
     }
 
-    private lateinit var binding : RecipeListFragmentBinding
+    private lateinit var binding: RecipeListFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
