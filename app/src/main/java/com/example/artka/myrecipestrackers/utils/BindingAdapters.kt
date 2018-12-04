@@ -1,8 +1,8 @@
 package com.example.artka.myrecipestrackers.utils
 
-import android.databinding.BindingAdapter
-import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("adapter")

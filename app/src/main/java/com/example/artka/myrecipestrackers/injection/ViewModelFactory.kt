@@ -1,18 +1,14 @@
 package com.example.artka.myrecipestrackers.injection
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.persistence.room.Room
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.example.artka.myrecipestrackers.mainactivity.SharedViewModel
-import com.example.artka.myrecipestrackers.room.database.RecipeDataBase
 
 class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
-            val db = Room.databaseBuilder(activity.applicationContext, RecipeDataBase::class.java, "posts").build()
-            @Suppress("UNCHECKED_CAST")
-            return SharedViewModel(db.recipeDataDao()) as T
+
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

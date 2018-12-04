@@ -1,32 +1,31 @@
 package com.example.artka.myrecipestrackers.mainactivity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.databinding.DataBindingUtil
 import com.example.artka.myrecipestrackers.R
-import com.example.artka.myrecipestrackers.databinding.MainActivityBinding
+import com.example.artka.myrecipestrackers.databinding.ActivityMainBinding
 import com.example.artka.myrecipestrackers.injection.ViewModelFactory
 import com.example.artka.myrecipestrackers.recipedetailfragment.RecipeDetailFragment
 import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListFragment
 import com.example.artka.myrecipestrackers.utils.Enums
 import com.example.artka.myrecipestrackers.utils.inTransaction
-import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
     private val recipeViewModel: SharedViewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory(this)).get(SharedViewModel::class.java)
+        ViewModelProviders.of(this).get(SharedViewModel::class.java)
     }
 
-    lateinit var binding: MainActivityBinding
+    private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewModel = recipeViewModel
 
         if (savedInstanceState == null) {
@@ -36,21 +35,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.setLifecycleOwner(this)
 
-        recipeViewModel.getState().observe(this, Observer<Enums.state> { it ->
+        recipeViewModel.getState().observe(this, Observer<Enums.State> { it ->
             setupFragment(it!!)
         }
         )
     }
 
-    fun setupFragment(enumsState: Enums.state) {
+    private fun setupFragment(enumsState: Enums.State) {
         when (enumsState) {
-            Enums.state.DETAIL -> {
+            Enums.State.DETAIL -> {
                 Log.e("TAG", "Opening Detail fragment")
                 val fragment = RecipeDetailFragment.newInstance()
                 supportFragmentManager.inTransaction { replace (R.id.fragment_container, fragment).addToBackStack(null) }
             }
 
-            Enums.state.MASTER -> Log.e("TAG", "Opening Master fragment")
+            Enums.State.MASTER -> Log.e("TAG", "Opening Master fragment")
             else -> Log.e("TAG", "Failed to open fragment")
         }
     }

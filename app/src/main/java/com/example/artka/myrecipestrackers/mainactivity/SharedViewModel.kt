@@ -1,14 +1,15 @@
 package com.example.artka.myrecipestrackers.mainactivity
 
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.artka.myrecipestrackers.base.BaseViewModel
 import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListAdapter
 import com.example.artka.myrecipestrackers.retrofit.RecipeApi
-import com.example.artka.myrecipestrackers.room.RecipeDataDao
-import com.example.artka.myrecipestrackers.room.RecipeModel
+import com.example.artka.myrecipestrackers.retrofit.apiresponse.Hit
+import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
+import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModelWrapper
 import com.example.artka.myrecipestrackers.utils.Enums
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class SharedViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(), IRecipeListViewModel {
+class SharedViewModel : BaseViewModel(), IRecipeListViewModel {
 
     @Inject
     lateinit var recipeApi: RecipeApi
@@ -26,8 +27,8 @@ class SharedViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(), I
     private lateinit var subscriptionUrl: Disposable
     private var subscriptionAdapter: Disposable? = null
 
-    private var state : MutableLiveData<Enums.state> = MutableLiveData()
-    private var recipe : MutableLiveData<RecipeModel> = MutableLiveData()
+    private var State : MutableLiveData<Enums.State> = MutableLiveData()
+    var recipe : MutableLiveData<RecipeModel> = MutableLiveData()
 
 
     override fun onCleared() {
@@ -37,58 +38,48 @@ class SharedViewModel(private val recipeDao: RecipeDataDao) : BaseViewModel(), I
     }
 
     init {
-        state.value = Enums.state.MASTER
+        State.value = Enums.State.MASTER
         loadRecipes()
         setupItemClick()
     }
 
     override fun loadRecipes() {
-        subscriptionUrl = Observable.fromCallable { recipeDao.getAll() }
-                .concatMap { dbRecipeList ->
-                    if (dbRecipeList.isEmpty())
-                        recipeApi.getRecipes().concatMap { apiRecipeList ->
-                            recipeDao.insertAll(*apiRecipeList.recipes.toTypedArray())
-                            Observable.just(apiRecipeList)
-                        }
-                    else
-                        Observable.just(dbRecipeList)
-
-                }
+        subscriptionUrl = recipeApi.getRecipes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        {result -> onRetrieveRecipesListSuccess(result as ArrayList<RecipeModel>)},
+                        {result -> onRetrieveRecipesListSuccess(result as RecipeModelWrapper)},
                         {onRetrieveRecipesListFailure()})
     }
 
-    private fun onRetrieveRecipesListSuccess(recipesList: ArrayList<RecipeModel>) {
-        recipeListAdapter.updateRecipeList(recipesList)
+    private fun onRetrieveRecipesListSuccess(wrapper: RecipeModelWrapper) {
+        recipeListAdapter.updateRecipeList(wrapper.hits)
     }
 
     private fun onRetrieveRecipesListFailure() {
         Log.e("TAG", "Failed to get recipes")
     }
 
-    fun setupItemClick() {
+    private fun setupItemClick() {
         subscriptionAdapter = recipeListAdapter.clickEvent
                 .subscribe {changeFragment(it)}
     }
 
-    fun changeFragment(recipeModel: RecipeModel) {
+    private fun changeFragment(recipeModel: RecipeModel) {
 
         recipe.value = recipeModel
 
         if (recipe.value != null) {
-            state.value = Enums.state.DETAIL
+            State.value = Enums.State.DETAIL
             getState()
         }
     }
 
-    fun getState() : LiveData<Enums.state> {
-        return state
+    fun getState() : LiveData<Enums.State> {
+        return State
     }
 
-    fun getRecipe() : LiveData<RecipeModel> {
+    fun getRecipeModel() : LiveData<RecipeModel> {
         return recipe
     }
 

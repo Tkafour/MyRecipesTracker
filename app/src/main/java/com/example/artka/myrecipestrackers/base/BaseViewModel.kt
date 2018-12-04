@@ -1,6 +1,6 @@
 package com.example.artka.myrecipestrackers.base
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.example.artka.myrecipestrackers.injection.component.DaggerViewModelInjector
 import com.example.artka.myrecipestrackers.injection.module.NetworkModule
 import com.example.artka.myrecipestrackers.injection.component.ViewModelInjector

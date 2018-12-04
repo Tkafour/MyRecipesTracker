@@ -4,13 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
-            type="com.example.artka.myrecipestrackers.mainactivity.SharedViewModel" />
+            type="com.example.artka.myrecipestrackers.mainactivity.SharedViewModel"/>
     </data>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
@@ -32,7 +31,7 @@
                 android:layout_height="300dp"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
-                app:imageUrl="@{viewModel.getRecipe().image_url}" />
+                app:imageUrl="@{viewModel.getRecipeModel().image}" />
 
             <TextView
                 android:id="@+id/recipe_name_text"
@@ -40,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/gray"
                 android:singleLine="true"
-                android:text="@{viewModel.getRecipe().title}"
+                android:text="@{viewModel.getRecipeModel().label}"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
 
@@ -50,10 +49,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/gray"
                 android:singleLine="true"
-                android:text="@{viewModel.getRecipe().publisher_url}"
+                android:text="@{viewModel.getRecipeModel().url}"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </layout>
