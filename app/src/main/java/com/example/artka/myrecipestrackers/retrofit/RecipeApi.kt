@@ -3,9 +3,17 @@ package com.example.artka.myrecipestrackers.retrofit
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModelWrapper
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface RecipeApi {
 
-    @GET("/search?q=chicken&app_id=e96f638b&app_key=80fb54d3b3a0496d3488511ea0c2c0b9&from=0&to=3&calories=591-722&health=alcohol-free")
-    fun getRecipes() : Observable<RecipeModelWrapper>
+    @GET("/search")
+    fun getRecipes(@Query("q") ingredient : String = "chicken",
+                   @Query("app_id") appId : String = "e96f638b",
+                   @Query("app_key") appKey : String = "80fb54d3b3a0496d3488511ea0c2c0b9",
+                   @Query("from") start : String = "0",
+                   @Query("to") end : String = "30",
+                   @Query ("calories") calories : String = "500-700",
+                   @Query ("health") health : String = "alcohol-free"): Observable<RecipeModelWrapper>
+
 }

@@ -7,21 +7,19 @@ import android.util.Log
 import com.example.artka.myrecipestrackers.base.BaseViewModel
 import com.example.artka.myrecipestrackers.recipelistfragment.RecipeListAdapter
 import com.example.artka.myrecipestrackers.retrofit.RecipeApi
-import com.example.artka.myrecipestrackers.retrofit.apiresponse.Hit
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModelWrapper
 import com.example.artka.myrecipestrackers.utils.Enums
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
-class SharedViewModel : BaseViewModel(), IRecipeListViewModel {
+class SharedViewModel : BaseViewModel() {
 
     @Inject
     lateinit var recipeApi: RecipeApi
+
     val recipeListAdapter = RecipeListAdapter()
 
     private lateinit var subscriptionUrl: Disposable
@@ -29,6 +27,7 @@ class SharedViewModel : BaseViewModel(), IRecipeListViewModel {
 
     private var State : MutableLiveData<Enums.State> = MutableLiveData()
     var recipe : MutableLiveData<RecipeModel> = MutableLiveData()
+    private var searchText : MutableLiveData<String> = MutableLiveData()
 
 
     override fun onCleared() {
@@ -43,8 +42,8 @@ class SharedViewModel : BaseViewModel(), IRecipeListViewModel {
         setupItemClick()
     }
 
-    override fun loadRecipes() {
-        subscriptionUrl = recipeApi.getRecipes()
+    fun loadRecipes(ingredient : String = "chicken") {
+        subscriptionUrl = recipeApi.getRecipes(ingredient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -81,6 +80,10 @@ class SharedViewModel : BaseViewModel(), IRecipeListViewModel {
 
     fun getRecipeModel() : LiveData<RecipeModel> {
         return recipe
+    }
+
+    fun getSearchText() : LiveData<String> {
+        return searchText
     }
 
 }
