@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.databinding.RecipeFragmentDetailBinding
-import com.example.artka.myrecipestrackers.injection.ViewModelFactory
 import com.example.artka.myrecipestrackers.mainactivity.SharedViewModel
 
 class RecipeDetailFragment : Fragment() {

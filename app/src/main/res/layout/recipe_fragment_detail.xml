@@ -12,6 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
@@ -51,6 +52,16 @@
                 android:text="@{viewModel.getRecipeModel().url}"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:singleLine="true"
+                android:text="@{String.valueOf(viewModel.getRecipeModel().calories)}"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

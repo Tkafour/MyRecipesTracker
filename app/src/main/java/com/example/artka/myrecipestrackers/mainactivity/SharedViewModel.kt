@@ -25,8 +25,8 @@ class SharedViewModel : BaseViewModel() {
     private lateinit var subscriptionUrl: Disposable
     private var subscriptionAdapter: Disposable? = null
 
-    private var State : MutableLiveData<Enums.State> = MutableLiveData()
-    var recipe : MutableLiveData<RecipeModel> = MutableLiveData()
+    private var fragmentState : MutableLiveData<Enums.State> = MutableLiveData()
+    private var recipe : MutableLiveData<RecipeModel> = MutableLiveData()
     private var searchText : MutableLiveData<String> = MutableLiveData()
 
 
@@ -37,7 +37,7 @@ class SharedViewModel : BaseViewModel() {
     }
 
     init {
-        State.value = Enums.State.MASTER
+        fragmentState.value = Enums.State.MASTER
         loadRecipes()
         setupItemClick()
     }
@@ -61,7 +61,7 @@ class SharedViewModel : BaseViewModel() {
 
     private fun setupItemClick() {
         subscriptionAdapter = recipeListAdapter.clickEvent
-                .subscribe {changeFragment(it)}
+                .subscribe {changeFragment(it.recipe)}
     }
 
     private fun changeFragment(recipeModel: RecipeModel) {
@@ -69,21 +69,16 @@ class SharedViewModel : BaseViewModel() {
         recipe.value = recipeModel
 
         if (recipe.value != null) {
-            State.value = Enums.State.DETAIL
+            fragmentState.value = Enums.State.DETAIL
             getState()
         }
     }
 
     fun getState() : LiveData<Enums.State> {
-        return State
+        return fragmentState
     }
 
     fun getRecipeModel() : LiveData<RecipeModel> {
         return recipe
     }
-
-    fun getSearchText() : LiveData<String> {
-        return searchText
-    }
-
 }

@@ -15,9 +15,9 @@ class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     private lateinit var items : List<Hit>
 
-    private val clickSubject = PublishSubject.create<RecipeModel>()
+    private val clickSubject = PublishSubject.create<Hit>()
 
-    val clickEvent : Observable<RecipeModel> = clickSubject
+    val clickEvent : Observable<Hit> = clickSubject
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding : ItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_list, parent, false)
@@ -29,7 +29,7 @@ class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position].recipe)
+        holder.bind(items[position])
     }
 
     fun updateRecipeList(items : List<Hit>){
@@ -43,12 +43,12 @@ class RecipeListAdapter: RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
         init {
             itemView.setOnClickListener{
-                clickSubject.onNext(items[layoutPosition].recipe)
+                clickSubject.onNext(items[layoutPosition])
             }
         }
 
-        fun bind(recipeModel: RecipeModel) {
-            viewModel.bind(recipeModel)
+        fun bind(hit: Hit) {
+            viewModel.bind(hit)
             binding.viewModel = viewModel
         }
     }

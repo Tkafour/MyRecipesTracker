@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                Log.e("SearchView Tag", "SearchViewClicked")
+                Log.e("SearchView Tag", "SearchView Clicked")
                 recipeViewModel.loadRecipes(query)
                 return false
             }
