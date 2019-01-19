@@ -4,16 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.example.artka.myrecipestrackers.mainactivity.SharedViewModel"/>
+            type="com.example.artka.myrecipestrackers.viewmodels.SharedViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
         android:elevation="8dp"
@@ -29,8 +30,8 @@
                 android:id="@+id/recipe_detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:scaleType="centerCrop"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.getRecipeModel().image}" />
 
             <TextView
@@ -61,7 +62,62 @@
                 android:singleLine="true"
                 android:text="@{String.valueOf(viewModel.getRecipeModel().calories)}"
                 android:textAlignment="center"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:singleLine="true"
+                android:text="@{String.valueOf(viewModel.getRecipeModel().source)}"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/ingredients_text"
+                    android:tag="ingredients_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/ingredients"
+                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
+
+                <Button
+                    android:id="@+id/basic_nutrition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/nutrition"
+                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
+
+                <Button
+                    android:id="@+id/mineral_nutrion"
+                    android:tag=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/recipe_minerals"
+                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
+
+                <Button
+                    android:id="@+id/recipe_tags"
+                    android:tag="recipe_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/recipe_tags"
+                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:adapter="@{viewModel.getRecipeDetailAdapter()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

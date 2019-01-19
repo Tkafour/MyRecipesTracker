@@ -42,7 +42,7 @@ object NetworkModule {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
+                /*.addInterceptor(httpLoggingInterceptor)*/
                 .build()
     }
 }

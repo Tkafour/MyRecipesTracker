@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.artka.myrecipestrackers.recipelistfragment.RecipeViewModel"/>
+            type="com.example.artka.myrecipestrackers.viewmodels.RecipeViewModel"/>
     </data>
 
     <androidx.cardview.widget.CardView

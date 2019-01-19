@@ -5,4 +5,8 @@
     <string name="add_ingredients">Add ingredients</string>
     <string name="add_name">Add name</string>
     <string name="search">Search...</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="nutrition">Nutrition</string>
+    <string name="recipe_minerals">Minerals</string>
+    <string name="recipe_tags">Tags</string>
 </resources>
