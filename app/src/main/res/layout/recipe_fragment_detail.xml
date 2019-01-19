@@ -10,115 +10,95 @@
             type="com.example.artka.myrecipestrackers.viewmodels.SharedViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:elevation="8dp"
-        app:cardCornerRadius="8dp">
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/recipe_detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{viewModel.getRecipeModel().image}" />
+
+        <TextView
+            android:id="@+id/recipe_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@{`Name: ` + viewModel.getRecipeModel().label}" />
+
+        <TextView
+            android:id="@+id/recipe_site_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`URL: ` + viewModel.getRecipeModel().url}" />
+
+        <TextView
+            android:id="@+id/recipe_calories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Calories: ` + String.valueOf(viewModel.getRecipeModel().calories)}" />
+
+        <TextView
+            android:id="@+id/recipe_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Volume: ` + String.valueOf(viewModel.getRecipeModel().totalWeight)}"/>
+
+        <TextView
+            android:id="@+id/recipe_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Time: ` + String.valueOf(viewModel.getRecipeModel().totalTime)}"/>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/ingredients_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:tag="ingredients_text"
+                android:text="@string/ingredients" />
+
+            <Button
+                android:id="@+id/basic_nutrition"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:text="@string/nutrition" />
+
+            <Button
+                android:id="@+id/mineral_nutrion"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:tag=""
+                android:text="@string/recipe_minerals" />
+
+            <Button
+                android:id="@+id/recipe_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:tag="recipe_tags"
+                android:text="@string/recipe_tags" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            app:adapter="@{viewModel.getRecipeDetailAdapter()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
 
-            <ImageView
-                android:id="@+id/recipe_detail_image"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.getRecipeModel().image}" />
-
-            <TextView
-                android:id="@+id/recipe_name_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:singleLine="true"
-                android:text="@{viewModel.getRecipeModel().label}"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/recipe_site_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:singleLine="true"
-                android:text="@{viewModel.getRecipeModel().url}"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/calories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:singleLine="true"
-                android:text="@{String.valueOf(viewModel.getRecipeModel().calories)}"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/source"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:singleLine="true"
-                android:text="@{String.valueOf(viewModel.getRecipeModel().source)}"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-            
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/ingredients_text"
-                    android:tag="ingredients_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/ingredients"
-                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
-
-                <Button
-                    android:id="@+id/basic_nutrition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/nutrition"
-                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
-
-                <Button
-                    android:id="@+id/mineral_nutrion"
-                    android:tag=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/recipe_minerals"
-                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
-
-                <Button
-                    android:id="@+id/recipe_tags"
-                    android:tag="recipe_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/recipe_tags"
-                    android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"/>
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_detail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:adapter="@{viewModel.getRecipeDetailAdapter()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </layout>
