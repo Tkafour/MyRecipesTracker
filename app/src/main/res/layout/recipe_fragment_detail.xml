@@ -35,7 +35,9 @@
             android:id="@+id/recipe_site_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{`URL: ` + viewModel.getRecipeModel().url}" />
+            android:text="@{`URL: ` + viewModel.getRecipeModel().url}"
+            android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+            android:tag="recipe_url"/>
 
         <TextView
             android:id="@+id/recipe_calories"

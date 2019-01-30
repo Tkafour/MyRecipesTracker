@@ -1,5 +1,6 @@
 package com.example.artka.myrecipestrackers.utils
 
+import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,4 +16,9 @@ fun loadImage(view: ImageView, imageUrl: String?) {
     Picasso.get()
             .load(imageUrl)
             .into(view)
+}
+
+@BindingAdapter("webView")
+fun loadUrl(view : WebView, url : String? ) {
+    view.loadUrl(url)
 }
