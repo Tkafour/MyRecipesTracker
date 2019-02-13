@@ -25,15 +25,14 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     @Inject
     lateinit var recipeApi: RecipeApi
 
-    val recipeListAdapter = RecipeListAdapter { recipeModel -> recipeItemClicked(recipeModel) }
-    val recipeDetailAdapter = RecipeDetailAdapter()
+    private var detailValues: MutableLiveData<Pair<RecipeModel?, String?>> = MutableLiveData()
 
-    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     private lateinit var subscriptionUrl: Disposable
 
     private var fragmentState: MutableLiveData<Enums.State> = MutableLiveData()
-    private var recipeList: ArrayList<RecipeModel> = ArrayList()
+    private var recipeList: MutableLiveData<ArrayList<RecipeModel>> = MutableLiveData()
     private var recipe: MutableLiveData<RecipeModel> = MutableLiveData()
 
 
@@ -54,24 +53,28 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                 .doOnSubscribe { onRetrievePostListStart() }
                 .doOnTerminate { onRetrievePostListFinish() }
                 .subscribe({ wrapper ->
-                    onRetrieveRecipesListSuccess(wrapper) },
-                        {onRetrieveRecipesListFailure()})
+                    onRetrieveRecipesListSuccess(wrapper)
+                },
+                        { it ->
+                            Log.d("TAG", it.toString())
+                            onRetrieveRecipesListFailure()
+                        })
     }
 
     private fun onRetrieveRecipesListSuccess(wrapper: RecipeModelWrapper) {
         onRetrievePostListFinish()
-        recipeList.clear()
+        recipeList.value?.clear()
+
+        var list: ArrayList<RecipeModel> = ArrayList()
 
         Log.d("TAG", "Reached this point")
 
-        for (i in 0.rangeTo(wrapper.hits.size)) {
-            recipeList.add(wrapper.hits[i].recipe)
+        for (i in 0.until(wrapper.hits.size)) {
+            list.add(wrapper.hits[i].recipe)
             Log.d("TAG", i.toString())
-            if (i == wrapper.hits.size - 1) {
-                recipeListAdapter.updateRecipeList(recipeList as List<RecipeModel>)
-            }
         }
         Log.d("TAG", "Reached this point2")
+        recipeList.value = list
     }
 
     private fun onRetrieveRecipesListFailure() {
@@ -88,12 +91,9 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
 
     private fun switchToDetailFragment(recipeModel: RecipeModel) {
 
-        recipeDetailAdapter.clearData()
         recipe.value = recipeModel
 
         fragmentState.value = Enums.State.DETAIL
-        getState()
-
     }
 
     fun getState(): LiveData<Enums.State> {
@@ -104,25 +104,41 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         return recipe
     }
 
-    private fun recipeItemClicked(recipeModel: RecipeModel) {
+    fun getRecipeList(): LiveData<ArrayList<RecipeModel>> {
+        return recipeList
+    }
+
+    fun recipeItemClicked(recipeModel: RecipeModel) {
         switchToDetailFragment(recipeModel)
     }
+
 
     fun getButtonClicked(view: View) {
         when (view.id) {
             R.id.ingredients_text -> {
-                recipeDetailAdapter.updateRecipeList(recipe.value!!, view.tag.toString())
                 Log.d("TAG", "Ingredients Button clicked")
+                detailValues.value = Pair(recipe.value, view.tag.toString())
             }
-            R.id.basic_nutrition -> Log.d("TAG", "Nutrition Button clicked")
-            R.id.mineral_nutrion -> Log.d("TAG", "Mineral Button clicked")
+            R.id.basic_nutrition -> {
+                Log.d("TAG", "Nutrition Button clicked")
+                detailValues.value = Pair(recipe.value, view.tag.toString())
+            }
+            R.id.mineral_nutrion -> {
+                Log.d("TAG", "Mineral Button clicked")
+                detailValues.value = Pair(recipe.value, view.tag.toString())
+            }
             R.id.recipe_tags -> {
-                recipeDetailAdapter.updateRecipeList(recipe.value!!, view.tag.toString())
                 Log.d("TAG", "Tags Button clicked")
+                detailValues.value = Pair(recipe.value, view.tag.toString())
             }
             R.id.recipe_site_url -> fragmentState.value = Enums.State.WEBVIEW
-            else -> Log.d("TAG", "Something went wrong")
+            else -> {
+                Log.d("TAG", "Something went wrong")
+            }
         }
     }
 
+    fun getDetailValues() : LiveData<Pair<RecipeModel?, String?>> {
+        return detailValues
+    }
 }

@@ -72,4 +72,6 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room_version"
     //Gson
     implementation 'com.google.code.gson:gson:2.8.5'
+    //ConstraintLayout
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha3'
 }

@@ -13,7 +13,6 @@ import com.example.artka.myrecipestrackers.viewholder.RecipeDetailViewHolder
 class RecipeDetailAdapter : RecyclerView.Adapter<RecipeDetailViewHolder>() {
 
     private lateinit var items: MutableList<String>
-    private lateinit var tag: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeDetailViewHolder {
         val binding: FdItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.fd_item_list, parent, false)
@@ -37,14 +36,13 @@ class RecipeDetailAdapter : RecyclerView.Adapter<RecipeDetailViewHolder>() {
 
     }
 
-    fun updateRecipeList(recipeModel: RecipeModel, tag: String) {
-        this.tag = tag
-        when (tag) {
-            "ingredients_text" -> this.items = recipeModel.ingredientLines as MutableList<String>
-            "recipe_tags" -> this.items = recipeModel.healthLabels as MutableList<String>
+    fun updateRecipeList(pair : Pair<RecipeModel?, String?>) {
+        when (pair.second) {
+            "ingredients_text" -> this.items = pair.first?.ingredientLines as MutableList<String>
+            "recipe_tags" -> this.items = pair.first?.healthLabels as MutableList<String>
             else -> ""
         }
-        Log.d("TAG", "DetailAdapter updateRecipeList called with tag value $tag")
+        Log.d("TAG", "DetailAdapter updateRecipeList called with tag value $pair.second")
         notifyDataSetChanged()
     }
 }

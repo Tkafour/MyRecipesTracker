@@ -9,7 +9,7 @@
             type="com.example.artka.myrecipestrackers.viewmodels.SharedViewModel"/>
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,9 +27,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:adapter="@{viewModel.getRecipeListAdapter()}" />
+            android:layout_height="match_parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
