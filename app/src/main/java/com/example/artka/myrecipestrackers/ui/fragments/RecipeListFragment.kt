@@ -2,6 +2,7 @@ package com.example.artka.myrecipestrackers.ui.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -26,19 +27,13 @@ class RecipeListFragment : Fragment() {
 
     private lateinit var binding : RecipeFragmentListBinding
 
-    companion object {
-        fun newInstance() : RecipeListFragment {
-            return RecipeListFragment()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.recipe_fragment_list, container, false)
         binding.recyclerView.layoutManager = GridLayoutManager(activity, 3)
         binding.viewModel = recipeViewModel
 
 
-        val recipeListAdapter = RecipeListAdapter { onRecipeClicked() }
+        val recipeListAdapter = RecipeListAdapter { model -> onRecipeClicked(model) }
         binding.recyclerView.adapter = recipeListAdapter
         recipeViewModel.getRecipeList().observe(activity as AppCompatActivity, Observer<ArrayList<RecipeModel>> {
             recipeListAdapter.updateRecipeList(it)
@@ -46,7 +41,8 @@ class RecipeListFragment : Fragment() {
         return binding.root
     }
 
-    private fun onRecipeClicked() {
+    private fun onRecipeClicked(model : RecipeModel) {
+        recipeViewModel.recipe.value = model
         val navDirections = actionListToDetail()
         view?.let {
             findNavController(it).navigate(navDirections)

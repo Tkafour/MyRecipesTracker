@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.adapters.RecipeDetailAdapter
 import com.example.artka.myrecipestrackers.databinding.RecipeFragmentDetailBinding
+import com.example.artka.myrecipestrackers.ui.fragments.RecipeDetailFragmentDirections.actionDetailToWebview
 import com.example.artka.myrecipestrackers.viewmodels.SharedViewModel
 
 class RecipeDetailFragment : Fragment() {
@@ -24,12 +26,6 @@ class RecipeDetailFragment : Fragment() {
     private lateinit var binding : RecipeFragmentDetailBinding
     private lateinit var recipeDetailAdapter : RecipeDetailAdapter
 
-    companion object {
-        fun newInstance() : RecipeDetailFragment {
-            return RecipeDetailFragment()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.recipe_fragment_detail, container, false)
         binding.viewModel = recipeViewModel
@@ -39,6 +35,14 @@ class RecipeDetailFragment : Fragment() {
         recipeViewModel.getDetailValues().observe(activity as AppCompatActivity, Observer {
             recipeDetailAdapter.updateRecipeList(it)
         })
+        binding.recipeSiteUrl.setOnClickListener { onUrlClicked() }
         return binding.root
+    }
+
+    private fun onUrlClicked() {
+        val navDirections = actionDetailToWebview()
+        view?.let {
+            findNavController(it).navigate(navDirections)
+        }
     }
 }

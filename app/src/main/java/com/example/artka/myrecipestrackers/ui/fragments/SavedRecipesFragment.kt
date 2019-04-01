@@ -26,12 +26,6 @@ class SavedRecipesFragment : Fragment() {
 
     private lateinit var binding : SavedRecipesFragmentBinding
 
-    companion object {
-        fun newInstance() : SavedRecipesFragment {
-            return SavedRecipesFragment()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.saved_recipes_fragment, container, false)
         binding.recyclerView.layoutManager = GridLayoutManager(activity, 3)

@@ -28,7 +28,7 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     private lateinit var subscriptionUrl: Disposable
 
     private var recipeList: MutableLiveData<ArrayList<RecipeModel>> = MutableLiveData()
-    private var recipe: MutableLiveData<RecipeModel> = MutableLiveData()
+    var recipe: MutableLiveData<RecipeModel> = MutableLiveData()
     private var recipeDbList : LiveData<List<RecipeModel>>
 
 
@@ -95,7 +95,7 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     }
 
     fun getButtonClicked(view: View) {
-        when (view.tag) {
+        when (view.id) {
             R.id.ingredients_text -> {
                 Log.d("TAG", "Ingredients Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
@@ -111,10 +111,6 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
             R.id.recipe_tags -> {
                 Log.d("TAG", "Tags Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
-            }
-
-            R.id.recipe_site_url -> {
-
             }
 
             R.id.fab_add_item -> {

@@ -1,5 +1,6 @@
 package com.example.artka.myrecipestrackers.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -29,6 +30,7 @@ class RecipeListAdapter(val clickListener: (RecipeModel) -> Unit): RecyclerView.
 
     fun updateRecipeList(items : List<RecipeModel>){
         this.items = items
+        Log.d("RecipeListAdapter ", items.size.toString())
         notifyDataSetChanged()
     }
 

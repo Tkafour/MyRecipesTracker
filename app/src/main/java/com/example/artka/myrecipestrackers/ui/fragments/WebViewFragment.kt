@@ -20,12 +20,6 @@ class WebViewFragment : Fragment() {
 
     private lateinit var binding : WebviewFragmentBinding
 
-    companion object {
-        fun newInstance() : WebViewFragment {
-            return WebViewFragment()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.webview_fragment, container, false)
         binding.viewModel = recipeViewModel
