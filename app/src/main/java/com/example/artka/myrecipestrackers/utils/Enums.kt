@@ -4,6 +4,7 @@ class Enums {
     enum class State {
         MASTER,
         DETAIL,
-        WEBVIEW
+        WEBVIEW,
+        SAVED
     }
 }

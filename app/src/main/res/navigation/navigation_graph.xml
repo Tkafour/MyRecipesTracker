@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/recipesListFragment"
+    tools:ignore="MissingDefaultResource">
+
+    <fragment
+        android:id="@+id/recipesListFragment"
+        android:name="com.example.artka.myrecipestrackers.ui.fragments.RecipeListFragment"
+        android:label="@string/label_recipe_list"
+        tools:layout="@layout/recipe_fragment_list">
+
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/recipeDetailFragment" />
+
+        <action
+            android:id="@+id/action_list_to_saved"
+            app:destination="@id/recipeSavedFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.artka.myrecipestrackers.ui.fragments.RecipeDetailFragment"
+        android:label="@string/label_recipe_detail"
+        tools:layout="@layout/recipe_fragment_detail">
+    <action
+        android:id="@+id/action_detail_to_webview"
+        app:destination="@id/webViewFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.artka.myrecipestrackers.ui.fragments.WebViewFragment"
+        android:label="@string/label_recipe_detail"
+        tools:layout="@layout/webview_fragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeSavedFragment"
+        android:name="com.example.artka.myrecipestrackers.ui.fragments.SavedRecipesFragment"
+        android:label="@string/label_saved_fragment"
+        tools:layout="@layout/saved_recipes_fragment">
+        <action
+            android:id="@+id/action_saved_to_detail"
+            app:destination="@+id/recipeDetailFragment"/>
+    </fragment>
+</navigation>

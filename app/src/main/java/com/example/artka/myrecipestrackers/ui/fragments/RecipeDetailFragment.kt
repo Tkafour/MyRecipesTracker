@@ -1,8 +1,7 @@
-package com.example.artka.myrecipestrackers.ui.recipedetailfragment
+package com.example.artka.myrecipestrackers.ui.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.adapters.RecipeDetailAdapter
 import com.example.artka.myrecipestrackers.databinding.RecipeFragmentDetailBinding
-import com.example.artka.myrecipestrackers.utils.Enums
 import com.example.artka.myrecipestrackers.viewmodels.SharedViewModel
 
 class RecipeDetailFragment : Fragment() {
@@ -36,12 +34,11 @@ class RecipeDetailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.recipe_fragment_detail, container, false)
         binding.viewModel = recipeViewModel
         binding.recyclerViewDetail.layoutManager = LinearLayoutManager(activity)
-        val recipeDetailAdapter = RecipeDetailAdapter()
+        recipeDetailAdapter = RecipeDetailAdapter()
         binding.recyclerViewDetail.adapter = recipeDetailAdapter
         recipeViewModel.getDetailValues().observe(activity as AppCompatActivity, Observer {
             recipeDetailAdapter.updateRecipeList(it)
         })
         return binding.root
     }
-
 }

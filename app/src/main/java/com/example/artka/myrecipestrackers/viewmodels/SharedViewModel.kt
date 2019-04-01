@@ -6,15 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import android.view.View
 import com.example.artka.myrecipestrackers.R
-import com.example.artka.myrecipestrackers.adapters.RecipeDetailAdapter
 import com.example.artka.myrecipestrackers.base.BaseViewModel
 import com.example.artka.myrecipestrackers.retrofit.RecipeApi
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModelWrapper
-import com.example.artka.myrecipestrackers.adapters.RecipeListAdapter
 import com.example.artka.myrecipestrackers.database.RecipeDao
-import com.example.artka.myrecipestrackers.utils.Enums
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -31,9 +27,10 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
 
     private lateinit var subscriptionUrl: Disposable
 
-    private var fragmentState: MutableLiveData<Enums.State> = MutableLiveData()
     private var recipeList: MutableLiveData<ArrayList<RecipeModel>> = MutableLiveData()
     private var recipe: MutableLiveData<RecipeModel> = MutableLiveData()
+    private var recipeDbList : LiveData<List<RecipeModel>>
+
 
 
     override fun onCleared() {
@@ -42,8 +39,8 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     }
 
     init {
-        fragmentState.value = Enums.State.MASTER
         loadRecipes()
+        recipeDbList = recipeDao.getAllRecipes()
     }
 
     fun loadRecipes(ingredient: String = "chicken") {
@@ -89,17 +86,6 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun switchToDetailFragment(recipeModel: RecipeModel) {
-
-        recipe.value = recipeModel
-
-        fragmentState.value = Enums.State.DETAIL
-    }
-
-    fun getState(): LiveData<Enums.State> {
-        return fragmentState
-    }
-
     fun getRecipeModel(): LiveData<RecipeModel> {
         return recipe
     }
@@ -108,13 +94,8 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         return recipeList
     }
 
-    fun recipeItemClicked(recipeModel: RecipeModel) {
-        switchToDetailFragment(recipeModel)
-    }
-
-
     fun getButtonClicked(view: View) {
-        when (view.id) {
+        when (view.tag) {
             R.id.ingredients_text -> {
                 Log.d("TAG", "Ingredients Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
@@ -131,14 +112,28 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                 Log.d("TAG", "Tags Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
             }
-            R.id.recipe_site_url -> fragmentState.value = Enums.State.WEBVIEW
+
+            R.id.recipe_site_url -> {
+
+            }
+
+            R.id.fab_add_item -> {
+                recipeDao.insert(recipe.value ?: RecipeModel())
+
+                Log.d("TAG", "FAB Clicked")
+            }
+
             else -> {
                 Log.d("TAG", "Something went wrong")
             }
         }
     }
 
-    fun getDetailValues() : LiveData<Pair<RecipeModel?, String?>> {
+    fun getDetailValues(): LiveData<Pair<RecipeModel?, String?>> {
         return detailValues
+    }
+
+    fun getSavedList() : LiveData<List<RecipeModel>> {
+        return recipeDbList
     }
 }

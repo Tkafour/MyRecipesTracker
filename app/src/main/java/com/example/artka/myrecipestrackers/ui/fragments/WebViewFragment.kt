@@ -1,4 +1,4 @@
-package com.example.artka.myrecipestrackers.ui.webviewfragment
+package com.example.artka.myrecipestrackers.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,6 @@ class WebViewFragment : Fragment() {
     }
 
     private lateinit var binding : WebviewFragmentBinding
-
-    private lateinit var recipeUrl : String
 
     companion object {
         fun newInstance() : WebViewFragment {

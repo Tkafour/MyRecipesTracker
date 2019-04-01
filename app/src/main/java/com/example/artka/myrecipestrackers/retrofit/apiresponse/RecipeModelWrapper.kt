@@ -18,7 +18,7 @@ data class RecipeModelWrapper(
         val totalNutrients: String
 )
 
-@Entity(tableName = "recipe_table")
+@Entity(tableName = "recipes")
 data class RecipeModel(
         @NonNull
         @PrimaryKey(autoGenerate = true)
