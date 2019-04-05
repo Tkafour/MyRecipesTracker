@@ -3,6 +3,8 @@ package com.example.artka.myrecipestrackers.database
 import androidx.room.TypeConverter
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.Digest
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.Ingredient
+import com.example.artka.myrecipestrackers.retrofit.apiresponse.TotalDaily
+import com.example.artka.myrecipestrackers.retrofit.apiresponse.TotalNutrients
 import com.example.artka.myrecipestrackers.utils.fromJson
 import com.google.gson.Gson
 import java.util.*
@@ -18,8 +20,7 @@ object RoomObjectConverters {
             return Collections.emptyList()
         }
 
-        val list = gson.fromJson<List<Any>>(data)
-        return list
+        return gson.fromJson(data)
     }
 
     @TypeConverter
@@ -35,8 +36,7 @@ object RoomObjectConverters {
             return Collections.emptyList()
         }
 
-        val list = gson.fromJson<List<String>>(data)
-        return list
+        return gson.fromJson(data)
     }
 
     @TypeConverter
@@ -52,8 +52,7 @@ object RoomObjectConverters {
             return Collections.emptyList()
         }
 
-        val list = gson.fromJson<List<Digest>>(data)
-        return list
+        return gson.fromJson(data)
     }
 
     @TypeConverter
@@ -69,13 +68,44 @@ object RoomObjectConverters {
             return Collections.emptyList()
         }
 
-        val list = gson.fromJson<List<Ingredient>>(data)
-        return list
+        return gson.fromJson(data)
     }
 
     @TypeConverter
     @JvmStatic
     fun ingredientsListToString(objects : List<Ingredient>) : String {
+        return gson.toJson(objects)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun stringToTotalDailyList(data : String) : List<TotalDaily> {
+        if (data == null) {
+            return Collections.emptyList()
+        }
+
+        return gson.fromJson(data)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun totalDailyListToString(objects : List<TotalDaily>) : String {
+        return gson.toJson(objects)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun stringToTotalNutrientsList(data : String) : List<TotalNutrients> {
+        if (data == null) {
+            return Collections.emptyList()
+        }
+
+        return gson.fromJson(data)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun totalNutrientsListToString(objects : List<TotalNutrients>) : String {
         return gson.toJson(objects)
     }
 }

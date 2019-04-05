@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
 
-@Database(entities = [RecipeModel::class], version = 2)
+@Database(entities = [RecipeModel::class], version = 3)
 @TypeConverters(RoomObjectConverters::class)
 abstract class RecipeRoomDatabase : RoomDatabase() {
     abstract fun recipeDao() : RecipeDao

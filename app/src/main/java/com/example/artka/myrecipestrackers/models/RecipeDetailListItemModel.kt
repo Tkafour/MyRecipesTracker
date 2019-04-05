@@ -1,8 +1,6 @@
-package com.example.artka.myrecipestrackers.viewmodels
+package com.example.artka.myrecipestrackers.models
 
-import com.example.artka.myrecipestrackers.base.BaseViewModel
-
-class RecipeDetailViewModel : BaseViewModel() {
+class RecipeDetailListItemModel {
 
     private lateinit var recipeDetail: String
 

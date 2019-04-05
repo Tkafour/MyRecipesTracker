@@ -35,7 +35,7 @@ class RecipeDetailFragment : Fragment() {
         recipeViewModel.getDetailValues().observe(activity as AppCompatActivity, Observer {
             recipeDetailAdapter.updateRecipeList(it)
         })
-        binding.recipeSiteUrl.setOnClickListener { onUrlClicked() }
+        binding.recipeUrlText.setOnClickListener { onUrlClicked() }
         return binding.root
     }
 

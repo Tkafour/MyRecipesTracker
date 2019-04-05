@@ -40,6 +40,9 @@ class RecipeDetailAdapter : RecyclerView.Adapter<RecipeDetailViewHolder>() {
         when (pair.second) {
             "ingredients_text" -> this.items = pair.first?.ingredientLines as MutableList<String>
             "recipe_tags" -> this.items = pair.first?.healthLabels as MutableList<String>
+            "nutrition" -> {
+                this.items = pair.first?.healthLabels as MutableList<String>
+            }
             else -> ""
         }
         Log.d("TAG", "DetailAdapter updateRecipeList called with tag value $pair.second")

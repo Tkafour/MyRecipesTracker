@@ -1,9 +1,8 @@
-package com.example.artka.myrecipestrackers.viewmodels
+package com.example.artka.myrecipestrackers.models
 
-import com.example.artka.myrecipestrackers.base.BaseViewModel
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.*
 
-class RecipeViewModel: BaseViewModel() {
+class RecipeListModel {
 
     private lateinit var recipeModel: RecipeModel
 

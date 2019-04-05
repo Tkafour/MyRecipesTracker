@@ -104,10 +104,6 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                 Log.d("TAG", "Nutrition Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
             }
-            R.id.mineral_nutrion -> {
-                Log.d("TAG", "Mineral Button clicked")
-                detailValues.value = Pair(recipe.value, view.tag.toString())
-            }
             R.id.recipe_tags -> {
                 Log.d("TAG", "Tags Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
