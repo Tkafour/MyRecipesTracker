@@ -26,25 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_activity_menu, menu)
-        val menuItem = menu?.findItem(R.id.search_view)
-        val searchView = menuItem?.actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                Log.d("SearchView Tag", "SearchView Clicked")
-                recipeViewModel.loadRecipes(query)
-                return false
-            }
-        })
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

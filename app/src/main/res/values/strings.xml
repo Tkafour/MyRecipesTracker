@@ -18,4 +18,5 @@
     <string name="volume">Volume</string>
     <string name="time">Time</string>
     <string name="go_to_source">Go to source</string>
+    <string name="label_search_fragment">Search</string>
 </resources>

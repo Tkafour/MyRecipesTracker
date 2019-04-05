@@ -79,9 +79,9 @@ object RoomObjectConverters {
 
     @TypeConverter
     @JvmStatic
-    fun stringToTotalDailyList(data : String) : List<TotalDaily> {
+    fun stringToTotalDaily(data : String) : TotalDaily {
         if (data == null) {
-            return Collections.emptyList()
+            return TotalDaily()
         }
 
         return gson.fromJson(data)
@@ -89,15 +89,15 @@ object RoomObjectConverters {
 
     @TypeConverter
     @JvmStatic
-    fun totalDailyListToString(objects : List<TotalDaily>) : String {
+    fun totalDailyToString(objects : TotalDaily) : String {
         return gson.toJson(objects)
     }
 
     @TypeConverter
     @JvmStatic
-    fun stringToTotalNutrientsList(data : String) : List<TotalNutrients> {
+    fun stringToTotalNutrients(data : String) : TotalNutrients {
         if (data == null) {
-            return Collections.emptyList()
+            return TotalNutrients()
         }
 
         return gson.fromJson(data)
@@ -105,7 +105,7 @@ object RoomObjectConverters {
 
     @TypeConverter
     @JvmStatic
-    fun totalNutrientsListToString(objects : List<TotalNutrients>) : String {
+    fun totalNutrientsToString(objects : TotalNutrients) : String {
         return gson.toJson(objects)
     }
 }
