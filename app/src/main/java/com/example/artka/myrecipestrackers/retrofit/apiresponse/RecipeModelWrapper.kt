@@ -33,8 +33,8 @@ data class RecipeModel(
         var label: String,
         var shareAs: String,
         var source: String,
-//        var totalDaily: TotalDaily,
-//        var totalNutrients: TotalNutrients,
+        var totalDaily: TotalDaily,
+        var totalNutrients: TotalNutrients,
         var totalTime: Double,
         var totalWeight: Double,
         var uri: String,
@@ -42,7 +42,7 @@ data class RecipeModel(
         var yield: Double
 ) {
     constructor() : this(0, 0.0, emptyList(), emptyList(), emptyList(),
-            "", emptyList(), emptyList(), "", "", "", 0.0, 0.0, "", "",0.0)
+            "", emptyList(), emptyList(), "", "", "", TotalDaily(), TotalNutrients(), 0.0, 0.0, "", "",0.0)
 }
 
 data class NutrientValue(

@@ -3,10 +3,9 @@ package com.example.artka.myrecipestrackers.ui.fragments
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,6 +26,24 @@ class RecipeListFragment : Fragment() {
 
     private lateinit var binding : RecipeFragmentListBinding
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_activity_menu, menu)
+        val menuItem = menu?.findItem(R.id.search_view)
+        val searchView = menuItem?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.d("SearchView Tag", "SearchView Clicked")
+                recipeViewModel.loadRecipes(query)
+                return false
+            }
+        })
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.recipe_fragment_list, container, false)
         binding.recyclerView.layoutManager = GridLayoutManager(activity, 3)
@@ -38,6 +55,7 @@ class RecipeListFragment : Fragment() {
         recipeViewModel.getRecipeList().observe(activity as AppCompatActivity, Observer<ArrayList<RecipeModel>> {
             recipeListAdapter.updateRecipeList(it)
         })
+        setHasOptionsMenu(true)
         return binding.root
     }
 
