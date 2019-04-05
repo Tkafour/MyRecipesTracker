@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.collapseActionView()
         setupNavigation()
     }
 

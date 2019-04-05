@@ -12,11 +12,11 @@
     <string name="label_recipe_list">RecipeList</string>
     <string name="label_recipe_detail">Recipe Detail</string>
     <string name="label_saved_fragment">Saved Recipes</string>
-    <string name="recipe_name">Name</string>
-    <string name="url">Url</string>
-    <string name="calories">Calories</string>
-    <string name="volume">Volume</string>
-    <string name="time">Time</string>
-    <string name="go_to_source">Go to source</string>
+    <string name="recipe_name">Name: </string>
+    <string name="url">Url: </string>
+    <string name="calories">Calories: </string>
+    <string name="volume">Volume: </string>
+    <string name="time">Time: </string>
+    <string name="go_to_source">Go to source: </string>
     <string name="label_search_fragment">Search</string>
 </resources>
