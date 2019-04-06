@@ -16,17 +16,20 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+
+
+
 class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
+
+    val TAG = SharedViewModel::class.toString()
 
     @Inject
     lateinit var recipeApi: RecipeApi
 
-    private var detailValues: MutableLiveData<Pair<RecipeModel?, String?>> = MutableLiveData()
-
-    var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-
     private lateinit var subscriptionUrl: Disposable
 
+    private var detailValues: MutableLiveData<Pair<RecipeModel?, String?>> = MutableLiveData()
+    var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     private var recipeList: MutableLiveData<ArrayList<RecipeModel>> = MutableLiveData()
     var recipe: MutableLiveData<RecipeModel> = MutableLiveData()
     private var recipeDbList : LiveData<List<RecipeModel>>
@@ -52,9 +55,8 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                 .subscribe({ wrapper ->
                     onRetrieveRecipesListSuccess(wrapper)
                 },
-                        { it ->
-                            Log.d("TAG", it.toString())
-                            onRetrieveRecipesListFailure()
+                        {
+                            onRetrieveRecipesListFailure(it)
                         })
     }
 
@@ -64,18 +66,14 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
 
         var list: ArrayList<RecipeModel> = ArrayList()
 
-        Log.d("TAG", "Reached this point")
-
         for (i in 0.until(wrapper.hits.size)) {
             list.add(wrapper.hits[i].recipe)
-            Log.d("TAG", i.toString())
         }
-        Log.d("TAG", "Reached this point2")
         recipeList.value = list
     }
 
-    private fun onRetrieveRecipesListFailure() {
-        Log.d("TAG", "Failed to get recipes")
+    private fun onRetrieveRecipesListFailure(throwable: Throwable) {
+        Log.d(TAG, throwable.toString())
     }
 
     private fun onRetrievePostListStart() {
@@ -97,26 +95,21 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     fun getButtonClicked(view: View) {
         when (view.id) {
             R.id.ingredients_text -> {
-                Log.d("TAG", "Ingredients Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
             }
             R.id.basic_nutrition -> {
-                Log.d("TAG", "Nutrition Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
             }
             R.id.recipe_tags -> {
-                Log.d("TAG", "Tags Button clicked")
                 detailValues.value = Pair(recipe.value, view.tag.toString())
             }
 
             R.id.fab_add_item -> {
                 recipeDao.insert(recipe.value ?: RecipeModel())
-
-                Log.d("TAG", "FAB Clicked")
             }
 
             else -> {
-                Log.d("TAG", "Something went wrong")
+                Log.d(TAG, "Something went wrong")
             }
         }
     }

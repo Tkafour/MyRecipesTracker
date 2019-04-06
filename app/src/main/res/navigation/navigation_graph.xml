@@ -64,4 +64,12 @@
             app:popEnterAnim="@anim/pop_enter_slide_up"
             app:popExitAnim="@anim/pop_exit_slide_up" />
     </fragment>
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.artka.myrecipestrackers.ui.fragments.CalendarFragment"
+        android:label="@string/calendar_fragment"
+        tools:layout="@layout/calendar_fragment">
+
+    </fragment>
 </navigation>

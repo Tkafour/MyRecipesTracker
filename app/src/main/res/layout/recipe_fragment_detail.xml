@@ -214,6 +214,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_add_black_24dp"
             app:fabCustomSize="60dp"
+            app:backgroundTint="@color/colorAccent"
             android:tag="fab_add"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
