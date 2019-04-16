@@ -6,216 +6,224 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.example.artka.myrecipestrackers.utils.Converters"/>
 
         <variable
             name="viewModel"
             type="com.example.artka.myrecipestrackers.viewmodels.SharedViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/recipe_detail_image"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.getRecipeModel().image}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/recipe_name"
-            android:text="@string/recipe_name"
-            style="@style/DetailTextStyle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_image"/>
+            <ImageView
+                android:id="@+id/recipe_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.getRecipeModel().image}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/recipe_name_text"
-            style="@style/DetailDescriptionStyle"
-            android:text="@{viewModel.getRecipeModel().label}"
-            app:layout_constraintStart_toEndOf="@+id/recipe_name"
-            app:layout_constraintTop_toTopOf="@+id/recipe_name"
-            tools:text="Recipe Name"/>
+            <TextView
+                android:id="@+id/recipe_name"
+                style="@style/DetailTextStyle"
+                android:text="@string/recipe_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_image" />
 
-        <View
-            android:id="@+id/detail_divider_1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_gray"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_name"/>
+            <TextView
+                android:id="@+id/recipe_name_text"
+                style="@style/DetailDescriptionStyle"
+                android:text="@{viewModel.getRecipeModel().label}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_name"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_name"
+                tools:text="Recipe Name" />
 
-        <TextView
-            android:id="@+id/recipe_url"
-            android:text="@string/url"
-            style="@style/DetailTextStyle"
-            android:paddingStart="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_divider_1"/>
+            <View
+                android:id="@+id/detail_divider_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_name_text" />
 
-        <TextView
-            android:id="@+id/recipe_url_text"
-            style="@style/DetailDescriptionStyle"
-            android:tag="recipe_url"
-            android:text="@string/go_to_source"
-            app:layout_constraintStart_toEndOf="@+id/recipe_url"
-            app:layout_constraintTop_toTopOf="@+id/recipe_url"
-            tools:text="Recipe Url"/>
+            <TextView
+                android:id="@+id/recipe_url"
+                style="@style/DetailTextStyle"
+                android:paddingStart="4dp"
+                android:text="@string/url"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_divider_1" />
 
-        <View
-            android:id="@+id/detail_divider_2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_gray"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_url"/>
+            <TextView
+                android:id="@+id/recipe_url_text"
+                style="@style/DetailDescriptionStyle"
+                android:tag="recipe_url"
+                android:text="@{String.valueOf(viewModel.getRecipeModel().url)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_url"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_url"
+                tools:text="Recipe Url" />
 
-        <TextView
-            android:id="@+id/recipe_calories"
-            android:text="@string/calories"
-            style="@style/DetailTextStyle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_divider_2"
-            tools:text="Calories"/>
+            <View
+                android:id="@+id/detail_divider_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_url_text" />
 
-        <TextView
-            android:id="@+id/recipe_calories_text"
-            style="@style/DetailDescriptionStyle"
-            android:text="@{String.valueOf(viewModel.getRecipeModel().calories)}"
-            app:layout_constraintStart_toEndOf="@+id/recipe_calories"
-            app:layout_constraintTop_toTopOf="@+id/recipe_calories"
-            tools:text="Recipe Calories"/>
+            <TextView
+                android:id="@+id/recipe_calories"
+                style="@style/DetailTextStyle"
+                android:text="@string/calories"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_divider_2"
+                tools:text="Calories" />
 
-        <View
-            android:id="@+id/detail_divider_3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_gray"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipe_calories"/>
+            <TextView
+                android:id="@+id/recipe_calories_text"
+                style="@style/DetailDescriptionStyle"
+                android:text="@{Converters.getFormattedCalories(viewModel.getRecipeModel().calories)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_calories"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_calories"
+                tools:text="Recipe Calories" />
 
-        <TextView
-            android:id="@+id/recipe_weight"
-            android:text="@string/volume"
-            style="@style/DetailTextStyle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_divider_3"
-            tools:text="Volume"/>
+            <View
+                android:id="@+id/detail_divider_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_calories_text" />
 
-        <TextView
-            android:id="@+id/recipe_weight_text"
-            style="@style/DetailDescriptionStyle"
-            android:text="@{String.valueOf(viewModel.getRecipeModel().totalWeight)}"
-            app:layout_constraintStart_toEndOf="@+id/recipe_weight"
-            app:layout_constraintTop_toTopOf="@+id/recipe_weight"
-            tools:text="Recipe Volume"/>
+            <TextView
+                android:id="@+id/recipe_weight"
+                style="@style/DetailTextStyle"
+                android:text="@string/volume"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_divider_3"
+                tools:text="Volume" />
 
-        <View
-            android:id="@+id/detail_divider_4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_gray"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipe_weight"/>
+            <TextView
+                android:id="@+id/recipe_weight_text"
+                style="@style/DetailDescriptionStyle"
+                android:text="@{Converters.getFormattedWeight(viewModel.getRecipeModel().totalWeight)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_weight"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_weight"
+                tools:text="Recipe Volume" />
 
-        <TextView
-            android:id="@+id/recipe_time"
-            android:text="@string/time"
-            style="@style/DetailTextStyle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_divider_4"
-            tools:text="Time:"/>
+            <View
+                android:id="@+id/detail_divider_4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_weight_text" />
 
-        <TextView
-            android:id="@+id/recipe_time_text"
-            style="@style/DetailDescriptionStyle"
-            android:text="@{String.valueOf(viewModel.getRecipeModel().totalTime)}"
-            app:layout_constraintStart_toEndOf="@+id/recipe_time"
-            app:layout_constraintTop_toTopOf="@+id/recipe_time"
-            tools:text="Recipe Time" />
+            <TextView
+                android:id="@+id/recipe_time"
+                style="@style/DetailTextStyle"
+                android:text="@string/time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_divider_4"
+                tools:text="Time:" />
 
-        <View
-            android:id="@+id/detail_divider_5"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_gray"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_time"/>
+            <TextView
+                android:id="@+id/recipe_time_text"
+                style="@style/DetailDescriptionStyle"
+                android:text="@{Converters.getFormattedTime(viewModel.getRecipeModel().totalTime)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_time"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_time"
+                tools:text="Recipe Time" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ingredients_text"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="0dp"
-            android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
-            android:tag="ingredients_text"
-            android:text="@string/ingredients"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_time_text"/>
+            <View
+                android:id="@+id/detail_divider_5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_time_text" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/basic_nutrition"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="0dp"
-            android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
-            android:text="@string/nutrition"
-            android:tag="nutrition"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/ingredients_text"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_time_text"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ingredients_text"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:tag="ingredients_text"
+                android:text="@string/ingredients"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_time_text" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/recipe_tags"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="0dp"
-            android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
-            android:tag="recipe_tags"
-            android:text="@string/recipe_tags"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/basic_nutrition"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_time_text"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/basic_nutrition"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:tag="nutrition"
+                android:text="@string/nutrition"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/ingredients_text"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_time_text" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients_text" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/recipe_tags"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:tag="recipe_tags"
+                android:text="@string/recipe_tags"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/basic_nutrition"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_time_text" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_add_black_24dp"
-            app:fabCustomSize="60dp"
-            app:backgroundTint="@color/colorAccent"
-            android:tag="fab_add"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_text" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:onClick="@{(v) -> viewModel.getButtonClicked(v)}"
+                android:src="@drawable/ic_add_black_24dp"
+                android:tag="fab_add"
+                app:backgroundTint="@color/colorAccent"
+                app:fabCustomSize="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
