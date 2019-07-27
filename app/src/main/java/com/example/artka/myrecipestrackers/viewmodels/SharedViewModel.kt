@@ -11,17 +11,14 @@ import com.example.artka.myrecipestrackers.retrofit.RecipeApi
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModelWrapper
 import com.example.artka.myrecipestrackers.database.RecipeDao
+import com.example.artka.myrecipestrackers.utils.debugLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-
-
 class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
-
-    val TAG = SharedViewModel::class.toString()
 
     @Inject
     lateinit var recipeApi: RecipeApi
@@ -32,8 +29,7 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     private var recipeList: MutableLiveData<ArrayList<RecipeModel>> = MutableLiveData()
     var recipe: MutableLiveData<RecipeModel> = MutableLiveData()
-    private var recipeDbList : LiveData<List<RecipeModel>>
-
+    private var recipeDbList: LiveData<List<RecipeModel>>
 
 
     override fun onCleared() {
@@ -42,12 +38,13 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     }
 
     init {
+        recipeList.value = ArrayList()
         loadRecipes()
         recipeDbList = recipeDao.getAllRecipes()
     }
 
-    fun loadRecipes(ingredient: String = "chicken") {
-        subscriptionUrl = recipeApi.getRecipes(ingredient)
+    fun loadRecipes(ingredient: String = "chicken", from: String = "0", to: String = "30") {
+        subscriptionUrl = recipeApi.getRecipes(ingredient = ingredient, start = from, end = to)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { onRetrievePostListStart() }
@@ -56,6 +53,7 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                     onRetrieveRecipesListSuccess(wrapper)
                 },
                         {
+                            it.printStackTrace()
                             onRetrieveRecipesListFailure(it)
                         })
     }
@@ -64,16 +62,20 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         onRetrievePostListFinish()
         recipeList.value?.clear()
 
-        var list: ArrayList<RecipeModel> = ArrayList()
+        val list: ArrayList<RecipeModel> = ArrayList()
 
         for (i in 0.until(wrapper.hits.size)) {
             list.add(wrapper.hits[i].recipe)
         }
-        recipeList.value = list
+        debugLog("${list.size}")
+        debugLog("${recipeList.value}")
+        recipeList.value?.addAll(list)
+        recipeList.postValue(recipeList.value)
+        debugLog("${recipeList.value}")
     }
 
     private fun onRetrieveRecipesListFailure(throwable: Throwable) {
-        Log.d(TAG, throwable.toString())
+        debugLog(throwable.toString())
     }
 
     private fun onRetrievePostListStart() {
@@ -109,7 +111,7 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
             }
 
             else -> {
-                Log.d(TAG, "Something went wrong")
+                debugLog("Something went wrong")
             }
         }
     }
@@ -118,7 +120,11 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         return detailValues
     }
 
-    fun getSavedList() : LiveData<List<RecipeModel>> {
+    fun getSavedList(): LiveData<List<RecipeModel>> {
         return recipeDbList
+    }
+
+    fun clearRecipeList() {
+        recipeList.value?.clear()
     }
 }

@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.adapters.RecipeListAdapter
 import com.example.artka.myrecipestrackers.databinding.RecipeFragmentListBinding
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
 import com.example.artka.myrecipestrackers.ui.fragments.RecipeListFragmentDirections.actionListToDetail
+import com.example.artka.myrecipestrackers.utils.debugLog
 import com.example.artka.myrecipestrackers.viewmodels.SharedViewModel
 
 class RecipeListFragment : Fragment() {
@@ -24,11 +26,14 @@ class RecipeListFragment : Fragment() {
         ViewModelProviders.of(activity as AppCompatActivity).get(SharedViewModel::class.java)
     }
 
-    private lateinit var binding : RecipeFragmentListBinding
+    private lateinit var binding: RecipeFragmentListBinding
+    private var loading = true
+    val recipeListAdapter = RecipeListAdapter { model -> onRecipeClicked(model) }
+    private var ingredient = ""
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_activity_menu, menu)
-        val menuItem = menu?.findItem(R.id.search_view)
+        val menuItem = menu.findItem(R.id.search_view)
         val searchView = menuItem?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -37,29 +42,70 @@ class RecipeListFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                Log.d("SearchView Tag", "SearchView Clicked")
-                recipeViewModel.loadRecipes(query)
+                debugLog("SearchView Clicked")
+                recipeViewModel.clearRecipeList()
+                recipeListAdapter.clearList()
+                ingredient = query
+                recipeViewModel.loadRecipes(ingredient)
                 return false
             }
         })
+        searchView.setOnCloseListener (object : SearchView.OnCloseListener {
+            override fun onClose(): Boolean {
+                recipeViewModel.clearRecipeList()
+                recipeListAdapter.clearList()
+                ingredient = "chicken"
+                recipeViewModel.loadRecipes(ingredient)
+
+                return false
+            }
+        }
+        )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.recipe_fragment_list, container, false)
-        binding.recyclerView.layoutManager = GridLayoutManager(activity, 3)
+        val layoutManager = GridLayoutManager(activity, 3)
+        binding.recyclerView.layoutManager = layoutManager
         binding.viewModel = recipeViewModel
 
-
-        val recipeListAdapter = RecipeListAdapter { model -> onRecipeClicked(model) }
         binding.recyclerView.adapter = recipeListAdapter
         recipeViewModel.getRecipeList().observe(activity as AppCompatActivity, Observer<ArrayList<RecipeModel>> {
+            debugLog("$it")
             recipeListAdapter.updateRecipeList(it)
+            loading = true
+        })
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    var visibleItemCount: Int
+                    var totalItemCount: Int
+                    var pastVisibleItems: Int
+                    layoutManager.let {
+                        visibleItemCount = it.childCount
+                        totalItemCount = it.itemCount
+                        pastVisibleItems = it.findFirstCompletelyVisibleItemPosition()
+                    }
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                            loading = false
+                            if (ingredient.isEmpty()) {
+                                ingredient = "chicken"
+                            }
+                            recipeViewModel.loadRecipes(ingredient = ingredient, from = "${recipeListAdapter.itemCount}", to = "${recipeListAdapter.itemCount + 30}")
+                        }
+                    }
+
+
+                }
+            }
         })
         setHasOptionsMenu(true)
         return binding.root
     }
 
-    private fun onRecipeClicked(model : RecipeModel) {
+    private fun onRecipeClicked(model: RecipeModel) {
         recipeViewModel.recipe.value = model
         val navDirections = actionListToDetail()
         view?.let {

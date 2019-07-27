@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.databinding.FdItemListBinding
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
+import com.example.artka.myrecipestrackers.utils.debugLog
 import com.example.artka.myrecipestrackers.viewholder.RecipeDetailViewHolder
 
 class RecipeDetailAdapter : RecyclerView.Adapter<RecipeDetailViewHolder>() {
@@ -60,7 +61,7 @@ class RecipeDetailAdapter : RecyclerView.Adapter<RecipeDetailViewHolder>() {
       }
       else -> ""
     }
-    Log.d("TAG", "DetailAdapter updateRecipeList called with tag value $pair.second")
+    debugLog("DetailAdapter updateRecipeList called with tag value $pair.second")
     notifyDataSetChanged()
   }
 }

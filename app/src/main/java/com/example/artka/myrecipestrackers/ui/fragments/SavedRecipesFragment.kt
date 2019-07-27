@@ -35,7 +35,7 @@ class SavedRecipesFragment : Fragment() {
         val recipeListAdapter = RecipeListAdapter { recipeModel -> recipeViewModel.getDetailValues()}
         binding.recyclerView.adapter = recipeListAdapter
         recipeViewModel.getSavedList().observe(activity as AppCompatActivity, Observer<List<RecipeModel>> {
-            recipeListAdapter.updateRecipeList(it)
+            recipeListAdapter.updateRecipeList(it as ArrayList<RecipeModel>)
         })
         return binding.root
     }

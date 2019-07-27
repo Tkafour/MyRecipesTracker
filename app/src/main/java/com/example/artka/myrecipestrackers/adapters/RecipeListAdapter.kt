@@ -9,30 +9,33 @@ import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.databinding.FlItemListBinding
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.Hit
 import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
+import com.example.artka.myrecipestrackers.utils.debugLog
 import com.example.artka.myrecipestrackers.viewholder.RecipeViewHolder
 
-class RecipeListAdapter(val clickListener: (RecipeModel) -> Unit): RecyclerView.Adapter<RecipeViewHolder>() {
+class RecipeListAdapter(val clickListener: (RecipeModel) -> Unit) : RecyclerView.Adapter<RecipeViewHolder>() {
 
-    private lateinit var items : List<RecipeModel>
+    private var items = ArrayList<RecipeModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val binding : FlItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.fl_item_list, parent, false)
+        val binding: FlItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.fl_item_list, parent, false)
         return RecipeViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return if (::items.isInitialized) items.size else 0
+        return items.size
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.bind(items[position], clickListener)
     }
 
-    fun updateRecipeList(items : List<RecipeModel>){
-        this.items = items
-        Log.d("RecipeListAdapter ", items.size.toString())
+    fun updateRecipeList(items: ArrayList<RecipeModel>) {
+        this.items.addAll(items)
+        debugLog(this.items.size.toString())
         notifyDataSetChanged()
     }
 
-
+    fun clearList() {
+        this.items.clear()
+    }
 }
