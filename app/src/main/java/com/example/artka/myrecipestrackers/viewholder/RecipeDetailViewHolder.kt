@@ -14,11 +14,11 @@ class RecipeDetailViewHolder (private val binding: FdItemListBinding) : Recycler
         val resources = itemView.context.resources
         viewModel.bind(recipeDetail)
         binding.viewModel = viewModel
-        if (adapterPosition % 2 == 0) {
-            itemView.background.setTint(resources.getColor(R.color.light_gray))
-        } else {
-            itemView.background.setTint(resources.getColor(R.color.white))
-        }
+//        if (adapterPosition % 2 == 0) {
+//            itemView.background.setTint(resources.getColor(R.color.light_gray))
+//        } else {
+//            itemView.background.setTint(resources.getColor(R.color.white))
+//        }
     }
 
     override fun onClick(v: View?) {

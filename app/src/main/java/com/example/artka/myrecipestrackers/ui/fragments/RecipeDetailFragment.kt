@@ -32,6 +32,7 @@ class RecipeDetailFragment : Fragment() {
         binding.recyclerViewDetail.layoutManager = LinearLayoutManager(activity)
         recipeDetailAdapter = RecipeDetailAdapter()
         binding.recyclerViewDetail.adapter = recipeDetailAdapter
+        binding.recyclerViewDetail.isNestedScrollingEnabled = false
         recipeViewModel.getDetailValues().observe(activity as AppCompatActivity, Observer {
             recipeDetailAdapter.updateRecipeList(it)
         })
