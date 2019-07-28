@@ -20,6 +20,28 @@
         <item name="android:paddingStart">3dp</item>
     </style>
 
+    <style name="ListTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/list_text_size</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:paddingStart">3dp</item>
+    </style>
+
+    <style name="ListDescriptionStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textSize">@dimen/list_text_size</item>
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
     <style name="DetailDescriptionStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">26dp</item>
@@ -41,4 +63,5 @@
     </style>
 
     <dimen name="text_size">16sp</dimen>
+    <dimen name="list_text_size">14sp</dimen>
 </resources>

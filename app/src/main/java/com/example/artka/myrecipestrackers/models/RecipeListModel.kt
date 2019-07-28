@@ -10,7 +10,7 @@ class RecipeListModel {
         this.recipeModel = recipeModel
     }
 
-    fun getRecipe() : RecipeModel {
+    fun getRecipeModel() : RecipeModel {
         return recipeModel
     }
 }

@@ -1,46 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.example.artka.myrecipestrackers.utils.Converters" />
+
         <variable
             name="viewModel"
-            type="com.example.artka.myrecipestrackers.models.RecipeListModel"/>
+            type="com.example.artka.myrecipestrackers.models.RecipeListModel" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:elevation="8dp"
         app:cardCornerRadius="8dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/recipe_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:singleLine="true"
-                android:text="@{viewModel.getRecipe().label}"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
 
             <ImageView
                 android:id="@+id/recipe_image"
-                android:layout_width="match_parent"
+                android:layout_width="130dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.getRecipe().image}" />
+                app:imageUrl="@{viewModel.getRecipeModel().image}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/recipe_name"
+                style="@style/ListTextStyle"
+                android:layout_marginTop="4dp"
+                android:text="@string/recipe_name"
+                app:layout_constraintLeft_toRightOf="@id/recipe_image"
+                app:layout_constraintStart_toEndOf="@id/recipe_image"
+                app:layout_constraintTop_toTopOf="@+id/recipe_image" />
+
+            <TextView
+                android:id="@+id/recipe_name_text"
+                style="@style/ListDescriptionStyle"
+                android:text="@{viewModel.getRecipeModel().label}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_name"
+                app:layout_constraintTop_toTopOf="@+id/recipe_name"
+                tools:text="Recipe Name" />
+
+            <TextView
+                android:id="@+id/recipe_url"
+                style="@style/ListTextStyle"
+                android:layout_marginTop="4dp"
+                android:paddingStart="4dp"
+                android:text="@string/url"
+                app:layout_constraintLeft_toRightOf="@id/recipe_image"
+                app:layout_constraintStart_toEndOf="@id/recipe_image"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_name" />
+
+            <TextView
+                android:id="@+id/recipe_url_text"
+                style="@style/ListDescriptionStyle"
+                android:tag="recipe_url"
+                android:text="@{String.valueOf(viewModel.getRecipeModel().url)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_url"
+                app:layout_constraintTop_toTopOf="@+id/recipe_url"
+                tools:text="Recipe Url" />
+
+            <TextView
+                android:id="@+id/recipe_calories"
+                style="@style/ListTextStyle"
+                android:layout_marginTop="4dp"
+                android:text="@string/calories"
+                app:layout_constraintLeft_toRightOf="@id/recipe_image"
+                app:layout_constraintStart_toEndOf="@id/recipe_image"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_url"
+                tools:text="Calories" />
+
+            <TextView
+                android:id="@+id/recipe_calories_text"
+                style="@style/ListDescriptionStyle"
+                android:text="@{Converters.getFormattedCalories(viewModel.getRecipeModel().calories)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_calories"
+                app:layout_constraintTop_toTopOf="@+id/recipe_calories"
+                tools:text="Recipe Calories" />
+
+            <TextView
+                android:id="@+id/recipe_weight"
+                style="@style/ListTextStyle"
+                android:layout_marginTop="4dp"
+                android:text="@string/volume"
+                app:layout_constraintLeft_toRightOf="@id/recipe_image"
+                app:layout_constraintStart_toEndOf="@id/recipe_image"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_calories"
+                tools:text="Volume" />
+
+            <TextView
+                android:id="@+id/recipe_weight_text"
+                style="@style/ListDescriptionStyle"
+                android:text="@{Converters.getFormattedWeight(viewModel.getRecipeModel().totalWeight)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_weight"
+                app:layout_constraintTop_toTopOf="@+id/recipe_weight"
+                tools:text="Recipe Volume" />
+
+            <TextView
+                android:id="@+id/recipe_time"
+                style="@style/ListTextStyle"
+                android:layout_marginTop="4dp"
+                android:text="@string/time"
+                app:layout_constraintLeft_toRightOf="@id/recipe_image"
+                app:layout_constraintStart_toEndOf="@id/recipe_image"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_weight"
+                tools:text="Time:" />
+
+            <TextView
+                android:id="@+id/recipe_time_text"
+                style="@style/ListDescriptionStyle"
+                android:text="@{Converters.getFormattedTime(viewModel.getRecipeModel().totalTime)}"
+                app:layout_constraintStart_toEndOf="@+id/recipe_time"
+                app:layout_constraintTop_toTopOf="@+id/recipe_time"
+                tools:text="Recipe Time" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

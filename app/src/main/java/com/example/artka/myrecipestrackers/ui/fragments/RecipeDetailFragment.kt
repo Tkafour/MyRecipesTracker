@@ -37,6 +37,7 @@ class RecipeDetailFragment : Fragment() {
             recipeDetailAdapter.updateRecipeList(it)
         })
         binding.recipeUrlText.setOnClickListener { onUrlClicked() }
+
         return binding.root
     }
 
