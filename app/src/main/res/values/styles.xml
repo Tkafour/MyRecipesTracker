@@ -31,6 +31,7 @@
         <item name="android:textSize">@dimen/list_text_size</item>
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:paddingStart">3dp</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="ListDescriptionStyle">
@@ -42,6 +43,7 @@
         <item name="android:textSize">@dimen/list_text_size</item>
         <item name="android:paddingStart">3dp</item>
         <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
     </style>
 
     <style name="DetailDescriptionStyle">
@@ -57,7 +59,8 @@
 
     <style name="DetailListItem">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">26dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">8dp</item>
         <item name="android:gravity">start</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/text_size</item>

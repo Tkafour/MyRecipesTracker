@@ -31,7 +31,6 @@
                 android:id="@+id/recipe_image"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="4dp"
                 android:scaleType="centerCrop"
                 android:transitionName="recipeImage"
                 android:background="@drawable/recipe_list_item_placeholder"
@@ -44,7 +43,6 @@
             <TextView
                 android:id="@+id/recipe_name"
                 style="@style/ListTextStyle"
-                android:layout_marginTop="4dp"
                 android:text="@string/recipe_name"
                 app:layout_constraintLeft_toRightOf="@id/recipe_image"
                 app:layout_constraintStart_toEndOf="@id/recipe_image"
@@ -58,33 +56,14 @@
                 app:layout_constraintTop_toTopOf="@+id/recipe_name"
                 tools:text="Recipe Name" />
 
-            <TextView
-                android:id="@+id/recipe_url"
-                style="@style/ListTextStyle"
-                android:layout_marginTop="4dp"
-                android:paddingStart="4dp"
-                android:text="@string/url"
-                app:layout_constraintLeft_toRightOf="@id/recipe_image"
-                app:layout_constraintStart_toEndOf="@id/recipe_image"
-                app:layout_constraintTop_toBottomOf="@+id/recipe_name" />
-
-            <TextView
-                android:id="@+id/recipe_url_text"
-                style="@style/ListDescriptionStyle"
-                android:tag="recipe_url"
-                android:text="@{String.valueOf(viewModel.getRecipeModel().url)}"
-                app:layout_constraintStart_toEndOf="@+id/recipe_url"
-                app:layout_constraintTop_toTopOf="@+id/recipe_url"
-                tools:text="Recipe Url" />
 
             <TextView
                 android:id="@+id/recipe_calories"
                 style="@style/ListTextStyle"
-                android:layout_marginTop="4dp"
                 android:text="@string/calories"
                 app:layout_constraintLeft_toRightOf="@id/recipe_image"
                 app:layout_constraintStart_toEndOf="@id/recipe_image"
-                app:layout_constraintTop_toBottomOf="@+id/recipe_url"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_name_text"
                 tools:text="Calories" />
 
             <TextView
@@ -98,7 +77,6 @@
             <TextView
                 android:id="@+id/recipe_weight"
                 style="@style/ListTextStyle"
-                android:layout_marginTop="4dp"
                 android:text="@string/volume"
                 app:layout_constraintLeft_toRightOf="@id/recipe_image"
                 app:layout_constraintStart_toEndOf="@id/recipe_image"
@@ -116,7 +94,6 @@
             <TextView
                 android:id="@+id/recipe_time"
                 style="@style/ListTextStyle"
-                android:layout_marginTop="4dp"
                 android:text="@string/time"
                 app:layout_constraintLeft_toRightOf="@id/recipe_image"
                 app:layout_constraintStart_toEndOf="@id/recipe_image"
