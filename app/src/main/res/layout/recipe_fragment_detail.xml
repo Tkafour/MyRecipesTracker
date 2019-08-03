@@ -66,7 +66,7 @@
                     android:id="@+id/recipe_url"
                     style="@style/DetailTextStyle"
                     android:paddingStart="4dp"
-                    android:text="@string/url"
+                    android:text="@string/go_to_source"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/detail_divider_1" />
 
@@ -74,7 +74,8 @@
                     android:id="@+id/recipe_url_text"
                     style="@style/DetailDescriptionStyle"
                     android:tag="recipe_url"
-                    android:text="@{String.valueOf(viewModel.getRecipeModel().url)}"
+                    android:text="@string/link"
+                    android:textColor="@android:color/holo_blue_dark"
                     app:layout_constraintStart_toEndOf="@+id/recipe_url"
                     app:layout_constraintTop_toTopOf="@+id/recipe_url"
                     tools:text="Recipe Url" />

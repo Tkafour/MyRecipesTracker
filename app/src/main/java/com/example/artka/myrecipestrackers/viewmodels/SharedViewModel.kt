@@ -96,22 +96,12 @@ class SharedViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
 
     fun getButtonClicked(view: View) {
         when (view.id) {
-            R.id.ingredients_text -> {
-                detailValues.value = Pair(recipe.value, view.tag.toString())
-            }
-            R.id.basic_nutrition -> {
-                detailValues.value = Pair(recipe.value, view.tag.toString())
-            }
-            R.id.recipe_tags -> {
-                detailValues.value = Pair(recipe.value, view.tag.toString())
-            }
-
             R.id.fab_add_item -> {
                 recipeDao.insert(recipe.value ?: RecipeModel())
             }
 
             else -> {
-                debugLog("Something went wrong")
+                detailValues.value = Pair(recipe.value, view.tag.toString())
             }
         }
     }

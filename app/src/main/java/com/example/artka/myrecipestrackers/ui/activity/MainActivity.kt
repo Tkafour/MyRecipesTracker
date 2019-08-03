@@ -3,6 +3,7 @@ package com.example.artka.myrecipestrackers.ui.activity
 import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation.findNavController
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = recipeViewModel
 
         binding.lifecycleOwner = this
+
+        setSupportActionBar(toolbar)
+
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.collapseActionView()
 
