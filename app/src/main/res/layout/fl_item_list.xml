@@ -33,6 +33,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
                 android:scaleType="centerCrop"
+                android:transitionName="recipeImage"
+                android:background="@drawable/recipe_list_item_placeholder"
                 app:imageUrl="@{viewModel.getRecipeModel().image}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

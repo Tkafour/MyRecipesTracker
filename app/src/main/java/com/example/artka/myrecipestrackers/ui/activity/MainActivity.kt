@@ -3,9 +3,6 @@ package com.example.artka.myrecipestrackers.ui.activity
 import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation.findNavController
@@ -17,8 +14,6 @@ import com.example.artka.myrecipestrackers.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    public val TAG = MainActivity::class.java.toString()
 
     private val recipeViewModel: SharedViewModel by lazy {
         ViewModelProviders.of(this, ViewModelFactory(this)).get(SharedViewModel::class.java)
@@ -35,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.collapseActionView()
+
         setupNavigation()
     }
 

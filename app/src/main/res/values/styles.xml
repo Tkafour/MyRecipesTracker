@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/dark_gray</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="DetailTextStyle">

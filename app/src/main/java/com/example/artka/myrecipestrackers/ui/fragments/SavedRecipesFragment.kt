@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artka.myrecipestrackers.R
 import com.example.artka.myrecipestrackers.adapters.RecipeListAdapter
 import com.example.artka.myrecipestrackers.databinding.SavedRecipesFragmentBinding
@@ -28,11 +28,11 @@ class SavedRecipesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.saved_recipes_fragment, container, false)
-        binding.recyclerView.layoutManager = GridLayoutManager(activity, 3)
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         binding.viewModel = recipeViewModel
 
 
-        val recipeListAdapter = RecipeListAdapter { recipeModel -> recipeViewModel.getDetailValues()}
+        val recipeListAdapter = RecipeListAdapter { model -> onRecipeClicked(model)}
         binding.recyclerView.adapter = recipeListAdapter
         recipeViewModel.getSavedList().observe(activity as AppCompatActivity, Observer<List<RecipeModel>> {
             recipeListAdapter.updateRecipeList(it as ArrayList<RecipeModel>)
@@ -40,7 +40,8 @@ class SavedRecipesFragment : Fragment() {
         return binding.root
     }
 
-    private fun onRecipeClicked() {
+    private fun onRecipeClicked(model : RecipeModel) {
+        recipeViewModel.recipe.value = model
         val navDirections = actionSavedToDetail()
         view?.let {
             findNavController(it).navigate(navDirections)

@@ -56,7 +56,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
     //Databinding
-    kapt "androidx.databinding:databinding-compiler:3.3.2"
+    kapt "androidx.databinding:databinding-compiler:3.4.2"
     //Constraint-Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     // Retrofit
@@ -82,7 +82,7 @@ dependencies {
     //ConstraintLayout
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha3'
     //Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
-    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
 }

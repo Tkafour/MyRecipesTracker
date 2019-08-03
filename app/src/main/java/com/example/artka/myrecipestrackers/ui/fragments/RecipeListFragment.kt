@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,10 @@ import com.example.artka.myrecipestrackers.retrofit.apiresponse.RecipeModel
 import com.example.artka.myrecipestrackers.ui.fragments.RecipeListFragmentDirections.actionListToDetail
 import com.example.artka.myrecipestrackers.utils.debugLog
 import com.example.artka.myrecipestrackers.viewmodels.SharedViewModel
+import kotlinx.android.synthetic.main.fl_item_list.*
+import kotlinx.android.synthetic.main.fl_item_list.recipe_image
+import kotlinx.android.synthetic.main.fl_item_list.view.*
+import kotlinx.android.synthetic.main.recipe_fragment_list.*
 
 class RecipeListFragment : Fragment() {
 
@@ -51,17 +57,14 @@ class RecipeListFragment : Fragment() {
                 return false
             }
         })
-        searchView.setOnCloseListener (object : SearchView.OnCloseListener {
-            override fun onClose(): Boolean {
-                recipeViewModel.clearRecipeList()
-                recipeListAdapter.clearList()
-                ingredient = "chicken"
-                recipeViewModel.loadRecipes(ingredient)
+        searchView.setOnCloseListener {
+            recipeViewModel.clearRecipeList()
+            recipeListAdapter.clearList()
+            ingredient = "chicken"
+            recipeViewModel.loadRecipes(ingredient)
 
-                return false
-            }
+            false
         }
-        )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -108,9 +111,9 @@ class RecipeListFragment : Fragment() {
 
     private fun onRecipeClicked(model: RecipeModel) {
         recipeViewModel.recipe.value = model
-        val navDirections = actionListToDetail()
-        view?.let {
-            findNavController(it).navigate(navDirections)
-        }
+        val extras = FragmentNavigatorExtras(
+                binding.recyclerView.recipe_image to "imageView"
+        )
+        findNavController().navigate(R.id.action_list_to_detail, null, null, extras)
     }
 }
